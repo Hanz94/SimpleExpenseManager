@@ -25,9 +25,32 @@ public class DbOperator extends SQLiteOpenHelper {
     public static final String databasename = "130637L.db";
     public static final int database_version = 1;
 
+    public static final String ACCOUNT ="CREATE TABLE "+accountTable+"(" +
+            accountNo+" varchar(15) PRIMARY KEY," +
+            branchName+" varchar(30),"+
+            accountHolderName+" varchar(30),"+
+            balance+" double"+")";
+
+    public static final String TRANSACTION ="CREATE TABLE "+transactionTable+"(" +
+            accountNo+" varchar(15)," +
+            transactionId+" varchar(20) PRIMARY KEY AUTO INCREMENT,"+
+            date+" date,"+
+            expenseType+" varchar(7),"+
+            amount+" double"+")";
+
+    public DbOperator(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
+
+    public DbOperator(Context context) {
+        super(context, databasename,null,database_version);
+    }
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        db.execSQL(TRANSACTION);
+        db.execSQL(ACCOUNT);
     }
 
     @Override
